@@ -151,4 +151,59 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="checkUserName" resultType="int" parameterType="string">
+    SELECT count(1) FROM universe_lerning
+    WHERE username = #{username}
+  </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string">
+    SELECT count(1) FROM universe_lerning
+    WHERE email = #{email}
+  </select>
+  
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM universe_lerning
+    WHERE username = #{username}
+    and password = #{password}
+  </select>
+
+  <select id="selectQueationByUsername" resultType="string" parameterType="string">
+    SELECT
+    question
+    FROM universe_lerning
+    WHERE username = #{username}
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    FROM universe_lerning
+    WHERE username = #{username}
+    and question = #{question}
+    and answer = #{answer}
+  </select>
+
+  <update id="updatePasswordByUsername" parameterType="map">
+    UPDATE universe_lerning
+    SET password = #{passwordNew}, update_time = now()
+    where username = #{username}
+  </update>
+
+  <select id="checkPassword" resultType="int" parameterType="map">
+    SELECT
+    COUNT (1)
+    FROM universe_lerning
+    WHERE id = #{userId}
+    and password = #{password}
+  </select>
+
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT count(1) FROM universe_lerning
+    WHERE email = #{email}
+    and id != #{userId}
+  </select>
 </mapper>
